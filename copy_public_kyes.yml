@@ -1,0 +1,17 @@
+--- # Author Farkhod Sadykov
+-  hosts: all
+   become: all
+   become_method: sudo
+   connection: ssh
+   vars:
+     public_keys:
+      - ssh-rsa 121
+      - ssh-rsa 122
+      - ssh-rsa 123
+
+   tasks:
+     - name: Changing the public_keys on remote system
+       lineinfile:
+         dest: /root/.ssh/authorized_keys
+         line: "{{public_keys | join(' ')}}"
+       become: yes
